@@ -5,10 +5,9 @@ with open(sys.argv[1]) as f:
     lines = f.read().split()
     urls = []
     for l in lines:
-        url = re.match(r'href=\"(/watch\?v=.*?)&amp;list=', l)
-        if url:
-            urls.append("http://youtube.com" + url.group(1))
-
-    uniq_urls = set(urls)
-    for url in uniq_urls:
-        print url
+        matcher = re.match(r'href=\"(/watch\?v=.*?)&amp;list=', l)
+        if matcher:
+            url = "http://youtube.com" + matcher.group(1)
+            if url not in urls:
+                urls.append(url)
+    print "\n".join(urls)
