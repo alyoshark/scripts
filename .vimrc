@@ -15,6 +15,8 @@ Bundle 'gmarik/vundle'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'davidhalter/jedi'
 Bundle 'scrooloose/syntastic'
+Bundle 'derekwyatt/vim-scala'
+Bundle 'scrooloose/nerdtree'
 
 filetype plugin indent on
 
@@ -78,3 +80,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+nmap <leader>nn :NERDTreeToggle<CR>
+
+set fileencodings=ucs-bom,utf-8,cp936,gb18030
