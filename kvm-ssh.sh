@@ -12,6 +12,6 @@ ipaddr=`arp | grep "$macaddr" | cut -d' ' -f1`
 echo "$ipaddr"
 
 # And we can now happily ssh to it :)
-if [[ "$2" -eq "ssh" ]]; then
+if [ "$2" == "ssh" ]; then
     ssh -X "$ipaddr"
 fi
