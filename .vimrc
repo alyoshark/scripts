@@ -17,6 +17,14 @@ Bundle 'davidhalter/jedi'
 Bundle 'scrooloose/syntastic'
 Bundle 'derekwyatt/vim-scala'
 Bundle 'scrooloose/nerdtree'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'vim-scripts/MatchTag'
+Bundle 'docunext/closetag.vim'
+Bundle 'vim-ruby/vim-ruby'
+
+" Loading closetag on HTMLish files
+au FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
+au FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 filetype plugin indent on
 
@@ -83,3 +91,50 @@ map <C-l> <C-W>l
 nmap <leader>nn :NERDTreeToggle<CR>
 
 set fileencodings=ucs-bom,utf-8,cp936,gb18030
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cscope setting
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
+
+" Cscope bindings
+nmap <C-[>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-[>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-[>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-[>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" Bind <- and -> to something useful
+map <right> :bn<cr>
+map <left> :bp<cr>
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
+" Status line
+set laststatus=2
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+" Some syntax highlight stuff
+" au BufRead,BufNewFile *.erb set filetype=eruby
+au BufRead,BufNewFile *.erb,*.html,*.coffee set sw=2
+"au BufRead,BufNewFile *.html set sw=2
+"au BufRead,BufNewFile *.coffee set sw=2
