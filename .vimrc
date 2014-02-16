@@ -26,6 +26,9 @@ Bundle 'vim-ruby/vim-ruby'
 au FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
 au FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
+" Some syntax specific stuff
+au BufRead,BufNewFile *.erb,*.html,*.coffee,*.ml,*.scss,*.css set sw=2
+
 filetype plugin indent on
 
 " Tab behavior
@@ -108,14 +111,14 @@ if has("cscope")
 endif
 
 " Cscope bindings
-nmap <C-[>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-[>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-[>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-[>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-[>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+" nmap <C-[>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+" nmap <C-[>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 " Bind <- and -> to something useful
 map <right> :bn<cr>
@@ -131,10 +134,12 @@ endfunction
 
 " Status line
 set laststatus=2
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ L%l:C%c
 
-" Some syntax highlight stuff
-" au BufRead,BufNewFile *.erb set filetype=eruby
-au BufRead,BufNewFile *.erb,*.html,*.coffee set sw=2
-"au BufRead,BufNewFile *.html set sw=2
-"au BufRead,BufNewFile *.coffee set sw=2
+" YouCompleteMe commands
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+nmap <F4> :YcmDiags<CR>
