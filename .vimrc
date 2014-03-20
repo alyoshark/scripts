@@ -143,3 +143,6 @@ nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '>*'
 nmap <F4> :YcmDiags<CR>
+
+au BufRead,BufNewFile *.c,*.cpp let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+au BufRead,BufNewFile *.py let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/python/ycm/server/tests/testdata/client_data/.ycm_extra_conf.py'
