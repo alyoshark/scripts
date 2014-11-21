@@ -6,25 +6,25 @@ let g:mapleader = ","
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'davidhalter/jedi'
-Bundle 'scrooloose/syntastic'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'scrooloose/nerdtree'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'vim-scripts/MatchTag'
-Bundle 'docunext/closetag.vim'
-Bundle 'vim-ruby/vim-ruby'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi'
+Plugin 'scrooloose/syntastic'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'vim-ruby/vim-ruby'
+
+call vundle#end()
 
 " Loading closetag on HTMLish files
-au FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-au FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+"" au FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
+"" au FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 " Some syntax specific stuff
 au BufRead,BufNewFile *.erb,*.html,*.coffee,*.ml,*.scss,*.css set sw=2
@@ -146,3 +146,30 @@ nmap <F4> :YcmDiags<CR>
 
 au BufRead,BufNewFile *.c,*.cpp let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 au BufRead,BufNewFile *.py let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/python/ycm/server/tests/testdata/client_data/.ycm_extra_conf.py'
+
+
+" Removes trailing spaces
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+endfunction
+
+set list listchars=trail:.,extends:>
+autocmd FileWritePre * :call TrimWhiteSpace()
+autocmd FileAppendPre * :call TrimWhiteSpace()
+autocmd FilterWritePre * :call TrimWhiteSpace()
+autocmd BufWritePre * :call TrimWhiteSpace()
+
+map <F2> :call TrimWhiteSpace()<CR>
+map! <F2> :call TrimWhiteSpace()<CR>
+
+function ShowSpaces(...)
+  let @/='\v(\s+$)|( +\ze\t)'
+  let oldhlsearch=&hlsearch
+  if !a:0
+    let &hlsearch=!&hlsearch
+  else
+    &hlsearch=a:1
+  end
+    return oldhlsearch
+endfunction
